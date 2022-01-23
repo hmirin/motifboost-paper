@@ -9,7 +9,7 @@ cd motifboost-paper
 pip install -r requirements.txt
 ```
 
-Data Download
+Download data and preprocess with:
 ```
 bash download.sh
 python -m convert
@@ -17,16 +17,16 @@ python -m convert
 
 ## Reproducing the results
 
-### Figure. 1
+### Figure 1
 
 #### For N=640 
 
 Classification for ``Emerson Dataset`` is performed by Burden Method and MotifBoost.
 ```
-python -m examples.emerson-dataset-comparison
+python -m examples.emerson_dataset_comparison
 ```
 
-Results are saved in ``mlruns`` folder. Use mlflow to see ROC-AUC curve and prefiction profile.
+Results are saved in ``mlruns`` folder. Use mlflow to see ROC-AUC curve and prefiction profile. See ``emerson_cohort_split_full`` project.
 
 
 #### For N < 640
@@ -46,14 +46,24 @@ ls [path to subsampled CSV folder]/*.csv | xargs -Ixxxx python -m examples.emers
 Results are saved in mlruns folder. Use mlflow to see ROC-AUC curve and prefiction profile.
 
 
-#### Figure. 2
+#### Figure 2
 
 Re-run the command for N=250 two times. You will see two different timestamped results for the same subsampled dataset id. Compare the results.
 
-#### Figure. 3
+#### Figure 3
 
 See ``notebooks`` folder.
 
-#### Figure. 4
+#### Figure 4
 
 Download the prediction profile of each method from N=640 experiment. Compare it with ```pairplot``` of seaborn.
+
+#### Table 1 (Other datasets)
+
+Classification for ``Huth Dataset`` or ``Heather Dataset`` is performed by Burden Method and MotifBoost.
+
+```
+python -m examples.heather_huth_dataset_comparison
+```
+
+Results are saved in ``mlruns`` folder. Use mlflow to see ROC-AUC curve and prefiction profile. See ``heather_alpha_cv`` and ``heather_beta_cv`` ``huth_cv`` project.
