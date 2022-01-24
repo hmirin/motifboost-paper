@@ -2,7 +2,7 @@
 # About
 
 - This repository is to provide examples of [MotifBoost](https://github.com/hmirin/MotifBoost), a library for robust and data-efficient classification of RepSeq data.
-- We provide commands to reroduce the results shown in the figures.
+- We provide commands to reroduce the results shown in the figures in the [paper](https://www.biorxiv.org/content/10.1101/2021.09.28.462258v1).
   - Note that the random seeds are not fixed for all the commands, as the paper is about the variance of the such randomness, we didn't fix the random seed. 
 
 
