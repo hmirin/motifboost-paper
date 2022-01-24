@@ -1,7 +1,13 @@
 
-# Usage
+# About
+
+- This repository is to provide examples of [MotifBoost](https://github.com/hmirin/MotifBoost), a library for robust and data-efficient classification of RepSeq data.
+- We provide commands to reroduce the results shown in the figures.
+  - Note that the random seeds are not fixed for all the commands, as the paper is about the variance of the such randomness, we didn't fix the random seed. 
+
 
 ## Preparation
+
 Requires Python>=3.8
 ```
 git clone https://github.com/hmirin/motifboost-paper
@@ -31,19 +37,20 @@ Results are saved in ``mlruns`` folder. Use mlflow to see ROC-AUC curve and pref
 
 #### For N < 640
 
-We need to perform subsampling. 
-Create subsampled dataset like below.
-Subsampled datasets are stored in ``data/subsampled/[timestamp]_[N_size]_[N_times]/[timestamp]_[N_size]_[N_times]_[id].csv``.
-```
-python -m subsampler N_size=400 N_times=50 
-```
-Pass CSVs to the script like this.
+Use subsampled CSVs in ``data/assets/[N]/`` Pass CSVs to the script like this.
 
 ```
 ls [path to subsampled CSV folder]/*.csv | xargs -Ixxxx python -m examples.emerson-dataset-subsampled xxxx 
 ```
-
 Results are saved in mlruns folder. Use mlflow to see ROC-AUC curve and prefiction profile.
+
+To run subsampling on your machine, run the script below:
+```
+python -m subsampler --mode paper-fig1 --train_size 50
+```
+
+Subsampled datasets are stored in ``data/subsampled/[timestamp]_[uuid]_[parameters].csv``. 
+
 
 
 #### Figure 2

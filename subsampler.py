@@ -804,10 +804,10 @@ def subsampler(
     to_dir: str,
     experiment_id: str,
     train_size: int,
-    test_size: int,
+    test_size: Optional[int],
     random_seed: int,
     get_class: Callable[[Repertoire], bool],
-    test_str: str = None,  # if given, will ignore test_size, sometimes we need to fix test
+    test_str: Optional[int] = None,  # if given, will ignore test_size, as sometimes we need to fix test
     filter_by_sample_id: Optional[Callable[[str], bool]] = None,
     filter_by_repertoire: Optional[Callable[[Repertoire], bool]] = None,
     skip_after: Optional[int] = None,
@@ -886,9 +886,9 @@ def subsampler(
             positive_rate * train_size
         )
         assert len(train_df) == train_size
-        assert set(train_df.sample_name) == train_size
+        assert len(set(train_df.sample_name)) == train_size
 
-        test_df = df[[s not in train_df["sample_name"] for s in df["sample_name"]]]
+        test_df = df[[s not in set(train_df["sample_name"]) for s in df["sample_name"]]]
         test_positive_df = test_df[test_df["status"] == True]
         test_negative_df = test_df[test_df["status"] == False]
         test_positive_size = int(positive_rate * test_size)
@@ -906,9 +906,8 @@ def subsampler(
             positive_rate * test_size
         )
         assert len(test_df) == test_size
-        assert set(test_df.sample_name) == test_size
-
-        assert len(set(train_df.sample_name) & set(train_df.sample_name)) == 0
+        assert len(set(test_df.sample_name)) == test_size
+        assert len(set(train_df.sample_name) & set(test_df.sample_name)) == 0
 
         train_df["type"] = "train"
         test_df["type"] = "test"
@@ -933,30 +932,39 @@ def subsampler(
 
 @click.command()
 @click.option(
-    "--save_dir", default="./data/interim/repertoires", help="Path to save dir"
+    "--save_dir", default="./data/preprocessed/", help="Path to save dir"
 )
 @click.option(
-    "--to_dir", default="./data/interim/sampled_repertoires", help="Path to save dir"
+    "--to_dir", default="./data/subsampled", help="Path to save dir"
 )
 @click.option(
     "--experiment_id", default="Emerson", type=str, help="experiment_id to convert"
 )
 @click.option("--times", default=50, type=int, help="experiment_id to convert")
-@click.option("--train_size", default=50, type=int, help="experiment_id to convert")
-@click.option("--test_size", default=100, type=int, help="experiment_id to convert")
+@click.option("--mode", default=None, type=str, help="experiment_id to convert")
+@click.option("--train_size", default=None, type=int, help="experiment_id to convert")
+@click.option("--test_size", default=None, type=int, help="experiment_id to convert")
 @click.option("--test_str", default=None, type=str, help="experiment_id to convert")
 def main(
     save_dir: str,
     to_dir: str,
-    train_size,
-    test_size,
-    test_str,
+    mode: str,
+    train_size :Optional[int],
+    test_size :Optional[int],
+    test_str :Optional[str],
     times: int,
     experiment_id: str,
 ):
     get_class = emerson_classification_cohort_split.get_class
     filter_by_sample_id = emerson_classification_cohort_split.filter_by_sample_id
     filter_by_repertoire = emerson_classification_cohort_split.filter_by_repertoire
+
+    if mode == "paper-fig1":
+        test_str = "Keck"
+    else:
+        if test_size is None and test_str is None:
+            raise ValueError("test_size or test_str must be specified")
+            
 
     for i in range(times):
         subsampler(
