@@ -3,7 +3,7 @@ import multiprocessing
 import mlflow
 from tqdm import tqdm
 
-from dataset.settings import emerson_classification_cohort_split
+from dataset import emerson_classification_cohort_split
 from experiments.fixed_split import main
 from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
 from motifboost.methods.motif import MotifBoostClassifier

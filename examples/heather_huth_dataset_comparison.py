@@ -5,7 +5,7 @@ import mlflow
 import pandas as pd
 from tqdm import tqdm
 
-from dataset.settings import (
+from dataset import (
     heather_classification_alpha,
     heather_classification_beta,
     huth_classification,
