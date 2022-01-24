@@ -37,7 +37,7 @@ Results are saved in ``mlruns`` folder. Use mlflow to see ROC-AUC curve and pref
 
 #### For N < 640
 
-Use subsampled CSVs in ``data/assets/[N]/`` Pass CSVs to the script like this.
+Use subsampled CSVs in ``data/assets/subsampled/[N]/`` Pass CSVs to the script like this.
 
 ```
 ls [path to subsampled CSV folder]/*.csv | xargs -Ixxxx python -m examples.emerson-dataset-subsampled xxxx 
@@ -73,4 +73,4 @@ Classification for ``Huth Dataset`` or ``Heather Dataset`` is performed by Burde
 python -m examples.heather_huth_dataset_comparison
 ```
 
-Results are saved in ``mlruns`` folder. Use mlflow to see ROC-AUC curve and prefiction profile. See ``heather_alpha_cv`` and ``heather_beta_cv`` ``huth_cv`` project.
+Results are saved in ``mlruns`` folder. Use mlflow to see ROC-AUC curve and prefiction profile. See ``heather_alpha_cv``, ``heather_beta_cv`` and ``huth_cv`` project.
