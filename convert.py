@@ -167,9 +167,9 @@ def make_test_dataset(save_dir: str):
         else:
             aas = ["A", "K"]
         sequences = [
-            "".join(random.choices(aas, k=random.randint(5, 10))) for x in range(100)
+            "".join(random.choices(aas, k=random.randint(5, 10))) for _ in range(100)
         ]
-        counts = [random.randint(1, 10) for x in range(100)]
+        counts = [random.randint(1, 10) for _ in range(100)]
         r = Repertoire(
             experiment_id="Test",
             sample_id="TestPatient_" + str(i),
