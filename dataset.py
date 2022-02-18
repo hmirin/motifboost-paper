@@ -1,5 +1,10 @@
 from dataclasses import dataclass
-from typing import Callable, Literal, Optional
+
+try:
+    from typing import Callable, Literal, Optional
+except:
+    from typing import Callable, Optional
+    from typing_extensions import Literal
 
 from motifboost.repertoire import Repertoire
 

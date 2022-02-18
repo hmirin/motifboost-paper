@@ -1,6 +1,5 @@
 import pathlib
-from typing import Callable
-from typing import Optional
+from typing import Callable, Optional
 from uuid import uuid4
 
 import click
@@ -807,7 +806,9 @@ def subsampler(
     test_size: Optional[int],
     random_seed: int,
     get_class: Callable[[Repertoire], bool],
-    test_str: Optional[int] = None,  # if given, will ignore test_size, as sometimes we need to fix test
+    test_str: Optional[
+        int
+    ] = None,  # if given, will ignore test_size, as sometimes we need to fix test
     filter_by_sample_id: Optional[Callable[[str], bool]] = None,
     filter_by_repertoire: Optional[Callable[[Repertoire], bool]] = None,
     skip_after: Optional[int] = None,
@@ -931,12 +932,8 @@ def subsampler(
 
 
 @click.command()
-@click.option(
-    "--save_dir", default="./data/preprocessed/", help="Path to save dir"
-)
-@click.option(
-    "--to_dir", default="./data/subsampled", help="Path to save dir"
-)
+@click.option("--save_dir", default="./data/preprocessed/", help="Path to save dir")
+@click.option("--to_dir", default="./data/subsampled", help="Path to save dir")
 @click.option(
     "--experiment_id", default="Emerson", type=str, help="experiment_id to convert"
 )
@@ -949,9 +946,9 @@ def main(
     save_dir: str,
     to_dir: str,
     mode: str,
-    train_size :Optional[int],
-    test_size :Optional[int],
-    test_str :Optional[str],
+    train_size: Optional[int],
+    test_size: Optional[int],
+    test_str: Optional[str],
     times: int,
     experiment_id: str,
 ):
@@ -964,7 +961,6 @@ def main(
     else:
         if test_size is None and test_str is None:
             raise ValueError("test_size or test_str must be specified")
-            
 
     for i in range(times):
         subsampler(
