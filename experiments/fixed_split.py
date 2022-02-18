@@ -1,4 +1,8 @@
-from typing import Callable, List, Literal, Optional
+try:
+    from typing import Callable, List, Literal, Optional
+except:
+    from typing import Callable, List, Optional
+    from typing_extensions import Literal
 
 from motifboost.repertoire import Repertoire, repertoire_dataset_loader
 from motifboost.util import summarize_metrics
