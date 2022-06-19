@@ -1,12 +1,29 @@
-
-# About
+## About
 
 - This repository is to provide examples of [MotifBoost](https://github.com/hmirin/MotifBoost), a library for robust and data-efficient classification of RepSeq data.
 - We provide commands to reproduce the results shown in the figures in the [paper](https://www.biorxiv.org/content/10.1101/2021.09.28.462258v1).
   - Note that the random seeds are not fixed for all the commands, as the paper is about the variance of such randomness, we didn't fix the random seed. 
 
+## Citation
 
-## Preparation
+https://www.biorxiv.org/content/10.1101/2021.09.28.462258v1.full
+
+```
+@article {Katayama2021.09.28.462258,
+	author = {Katayama, Yotaro and Kobayashi, Tetsuya J.},
+	title = {MotifBoost: k-mer based data-efficient immune repertoire classification method},
+	elocation-id = {2021.09.28.462258},
+	year = {2021},
+	doi = {10.1101/2021.09.28.462258},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2021/10/01/2021.09.28.462258},
+	eprint = {https://www.biorxiv.org/content/early/2021/10/01/2021.09.28.462258.full.pdf},
+	journal = {bioRxiv}
+}
+```
+
+
+# Install
 
 Requires Python>=3.8
 ```
