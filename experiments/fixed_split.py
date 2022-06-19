@@ -40,9 +40,15 @@ def main(
     print("positive samples:", len(positive_person_ids))
     print("negative samples:", len(negative_person_ids))
 
-    # Fixed Split CV
+    # Fixed Split
     train_repertoires = [r for r in repertoires if get_split(r) == "train"]
     val_repertoires = [r for r in repertoires if get_split(r) == "test"]
+    train_positive_size = len([r for r in repertoires if get_split(r) == "train" and get_class(r)])
+    train_negative_size = len([r for r in repertoires if get_split(r) == "train" and not get_class(r)])
+    val_positive_size = len([r for r in repertoires if get_split(r) == "test" and get_class(r)])
+    val_negative_size = len([r for r in repertoires if get_split(r) == "test" and not get_class(r)])
+    print(f"train: sum={len(train_repertoires)}, positive={train_positive_size}, negative={train_negative_size}") 
+    print(f"val: sum={len(val_repertoires)}, positive={val_positive_size}, negative={val_negative_size}") 
     data_labels = [r.info["person_id"] for r in val_repertoires]
     classifier.fit(train_repertoires, [get_class(x) for x in train_repertoires])
     pred_probas = classifier.predict_proba(val_repertoires)[:, 1]

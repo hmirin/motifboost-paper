@@ -1,5 +1,10 @@
 data
 results
-mlruns
+mlruns*
 *.pyc
 .python-version
+archive/*
+*.eps
+*.txt
+*.zip
+.idea
