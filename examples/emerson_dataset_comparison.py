@@ -1,35 +1,36 @@
-import multiprocessing
-
 import mlflow
-from tqdm import tqdm
 from motifboost.methods.atchley_mil import AtchleyKmerMILClassifier
 from motifboost.methods.atchley_simple import AtchleySimpleClassifier
+from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
+from motifboost.methods.motif import MotifBoostClassifier
+from motifboost.util import human_amino_acids
+from tqdm import tqdm
 
 from dataset import emerson_classification_cohort_split
 from experiments.fixed_split import main
-from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
-from motifboost.methods.motif import MotifBoostClassifier
-from motifboost.methods.motif import MotifBoostClassifier
-from motifboost.util import human_amino_acids
 
 mlflow.set_experiment("emerson_cohort_split_full")
 
 
 classifier_dict = {
     "motifboost": MotifBoostClassifier(),
-    "emerson": EmersonClassifierWithParameterSearch(emerson_classification_cohort_split.get_class,human_amino_acids),
+    "emerson": EmersonClassifierWithParameterSearch(
+        emerson_classification_cohort_split.get_class, human_amino_acids
+    ),
     "atchley_mil": AtchleyKmerMILClassifier(
-        target_label = "CMV",
-        iteration_count = 100,
-        threshold = 0.001,
-        evaluate_at = 1000,
+        target_label="CMV",
+        iteration_count=100,
+        threshold=0.001,
+        evaluate_at=1000,
         use_early_stopping=True,
         random_seed=0,
         learning_rate=0.01,
         zero_abundance_weight_init=True,
         n_jobs=8,
     ),
-    "atchley_simple": AtchleySimpleClassifier(n_gram=3,n_subsample=10000,n_codewords=100,n_augmentation=100,n_jobs=8)
+    "atchley_simple": AtchleySimpleClassifier(
+        n_gram=3, n_subsample=10000, n_codewords=100, n_augmentation=100, n_jobs=8
+    ),
 }
 
 settings_dict = {

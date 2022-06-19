@@ -2,26 +2,19 @@ import multiprocessing
 import os
 from glob import glob
 from itertools import product
-from typing import Literal, List
+from typing import Literal
 
-import functools
 import pandas as pd
-from joblib import Parallel
-from joblib import delayed
-from tqdm import tqdm
-
+from motifboost.methods.atchley_mil import AtchleyKmerMILClassifier
 from motifboost.methods.atchley_simple import AtchleySimpleClassifier
+# from motifboost.methods.motif import MotifClassifier
+from motifboost.repertoire import Repertoire, repertoire_dataset_loader
+from motifboost.util import human_amino_acids
+from tqdm import tqdm
 
 # from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
 from dataset import emerson_classification_cohort_split
 from experiments.fixed_split import main
-
-# from motifboost.methods.motif import MotifClassifier
-from motifboost.repertoire import Repertoire
-from motifboost.repertoire import repertoire_dataset_loader
-from motifboost.util import human_amino_acids
-
-from motifboost.methods.atchley_mil import AtchleyKmerMILClassifier
 
 classifier_dict = {
     "motif": MotifBoostClassifier(),
@@ -29,7 +22,7 @@ classifier_dict = {
         setting.get_class, human_amino_acids, multi_process=4
     ),
     "atchley_simple": AtchleySimpleClassifier(
-       n_gram=3, n_subsample=10000, n_codewords=100, n_augmentation=100
+        n_gram=3, n_subsample=10000, n_codewords=100, n_augmentation=100
     ),
     "atchley-mil": AtchleyKmerMILClassifier(
         target_label="CMV",
@@ -41,7 +34,7 @@ classifier_dict = {
         learning_rate=0.001,
         zero_abundance_weight_init=True,
         n_jobs=8,
-    )
+    ),
 }
 
 settings_dict = {
@@ -69,7 +62,7 @@ for sample in [100, 250, 400]:
             df = pd.read_csv(split_file)
             trainingset_names = list(df[df["type"] == "train"]["sample_name"])
             testset_names = list(df[df["type"] == "test"]["sample_name"])
-            # convert to deeprc based naming 
+            # convert to deeprc based naming
             testset_names = [n.replace("_MC1", "") for n in testset_names]
             if x.sample_id in trainingset_names:
                 # print("train",x.sample_id)

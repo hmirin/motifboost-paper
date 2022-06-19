@@ -2,15 +2,16 @@
 # Subsample Emerson sequences (at N=640 for DeepRC repertoire and MotifBoost)MotifBoost for 3 times
 import os
 from typing import Optional
+
 import click
-from tqdm import tqdm
 from MotifBoost.motifboost.repertoire import (
-    repertoire_dataset_loader,
     augment_repertoire,
+    repertoire_dataset_loader,
 )
-from dataset import emerson_classification_cohort_split
+from tqdm import tqdm
 
 from convert_to_deeprc import convert_to_deeprc
+from dataset import emerson_classification_cohort_split
 
 
 @click.command()
@@ -34,7 +35,7 @@ def main(
     times: int,
     # sample_ratio: float,
 ):
-    for sequence_ratio in tqdm([0.1,0.01,0.001],desc="sample ratio"):
+    for sequence_ratio in tqdm([0.1, 0.01, 0.001], desc="sample ratio"):
         for t in tqdm(range(times), desc="N"):
             repertoires = repertoire_dataset_loader(
                 save_dir,
@@ -65,14 +66,23 @@ def main(
             os.makedirs(to_dir_motif, exist_ok=True)
             for r in tqdm(subsampled_repertoires, desc="saving repertoire"):
                 r.save(to_dir_motif)
-            to_dir_deeprc = to_dir + "/" + experiment_id + "_deeprc" + "_" + str(sequence_ratio) + "_" + str(t)
+            to_dir_deeprc = (
+                to_dir
+                + "/"
+                + experiment_id
+                + "_deeprc"
+                + "_"
+                + str(sequence_ratio)
+                + "_"
+                + str(t)
+            )
             convert_to_deeprc(
                 to_dir_motif,
                 to_dir_deeprc,
                 experiment_id,
                 emerson_classification_cohort_split.get_class,
                 emerson_classification_cohort_split.filter_by_sample_id,
-                emerson_classification_cohort_split.filter_by_repertoire,            
+                emerson_classification_cohort_split.filter_by_repertoire,
             )
             del sampled_repertoires
 
