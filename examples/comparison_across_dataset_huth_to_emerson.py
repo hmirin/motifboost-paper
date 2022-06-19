@@ -1,19 +1,15 @@
 import os
-from tqdm import tqdm
 from typing import Literal
 
-from motifboost.repertoire import Repertoire, repertoire_dataset_loader
-from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
-from dataset import (
-    huth_classification,
-    emerson_classification_cohort_split,
-)
+from dataset import emerson_classification_cohort_split, huth_classification
 from experiments.fixed_split import main
-from motifboost.methods.motif import MotifBoostClassifier
-from motifboost.methods.atchley_simple import AtchleySimpleClassifier
 from motifboost.methods.atchley_mil import AtchleyKmerMILClassifier
+from motifboost.methods.atchley_simple import AtchleySimpleClassifier
+from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
+from motifboost.methods.motif import MotifBoostClassifier
+from motifboost.repertoire import Repertoire, repertoire_dataset_loader
 from motifboost.util import human_amino_acids
-
+from tqdm import tqdm
 
 
 def emerson_hip_to_huth_split(x: Repertoire) -> Literal["train", "test", "other"]:
@@ -34,7 +30,6 @@ def huth_to_emerson_hip_split(x: Repertoire) -> Literal["train", "test", "other"
     else:
         print(x.sample_id)
         raise NotImplementedError(x)
-
 
 
 classifier_dict = {
@@ -60,7 +55,7 @@ classifier_dict = {
     ),
 }
 
-if __name__=="__main__":
+if __name__ == "__main__":
 
     save_dir = "./data/preprocessed/"
 
@@ -87,9 +82,12 @@ if __name__=="__main__":
         r.info["CMV"] = r.info["cmv"]
     repertoires = emerson_repertoires + huth_repertoires
 
-    for classifier_prefix, classifier in tqdm(classifier_dict.items(), desc="classifiers"):
+    for classifier_prefix, classifier in tqdm(
+        classifier_dict.items(), desc="classifiers"
+    ):
         main(
-            mlflow_experiment_id="cross_learning_from_huth_to_emerson_hip" + os.uname().nodename,
+            mlflow_experiment_id="cross_learning_from_huth_to_emerson_hip"
+            + os.uname().nodename,
             save_dir=save_dir,
             fig_save_dir="./data/",
             experiment_id="huth_to_emerson_hip",
