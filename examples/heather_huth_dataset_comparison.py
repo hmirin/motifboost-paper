@@ -30,7 +30,9 @@ for name, setting in settings.items():
         ),
     }
 
-    for idx, fle in enumerate(sorted(tqdm(glob.glob(f"./data/assets/{name}_split_*.csv")))):
+    for idx, fle in enumerate(
+        sorted(tqdm(glob.glob(f"./data/assets/{name}_split_*.csv")))
+    ):
         print(idx, fle)
         # create get_class
         df = pd.read_csv(fle)
