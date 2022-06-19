@@ -1,31 +1,28 @@
 import pathlib
-from typing import Callable
-from typing import List
-from typing import Literal
-from typing import Optional
+from typing import Callable, List, Literal, Optional
 
 import click
 import pandas as pd
+from motifboost.repertoire import Repertoire, repertoire_dataset_loader
 
-from dataset import emerson_classification_cohort_split
 from dataset import (
+    emerson_classification_cohort_split,
     heather_classification_alpha,
     heather_classification_beta,
+    huth_classification,
 )
-from dataset import huth_classification
-from motifboost.repertoire import Repertoire, repertoire_dataset_loader
 
 
 def convert_to_deeprc(
-        save_dir: str,
-        to_dir: str,
-        experiment_id: str,
-        get_split: Callable[[Repertoire], Literal["train", "test", "other"]],
-        filter_by_sample_id: Optional[Callable[[str], bool]] = None,
-        filter_by_repertoire: Optional[Callable[[Repertoire], bool]] = None,
-        skip_after: Optional[int] = None,
-        n_processes: Optional[int] = None,
-        repertoires = None
+    save_dir: str,
+    to_dir: str,
+    experiment_id: str,
+    get_split: Callable[[Repertoire], Literal["train", "test", "other"]],
+    filter_by_sample_id: Optional[Callable[[str], bool]] = None,
+    filter_by_repertoire: Optional[Callable[[Repertoire], bool]] = None,
+    skip_after: Optional[int] = None,
+    n_processes: Optional[int] = None,
+    repertoires=None,
 ):
     if not repertoires:
         repertoires = repertoire_dataset_loader(
@@ -70,10 +67,10 @@ def convert_to_deeprc(
     "--data_type", type=click.Choice(["HeatherAlpha", "HeatherBeta", "Huth", "Emerson"])
 )
 def main(
-        save_dir: str,
-        to_dir: str,
-        experiment_ids: List[str],
-        data_type: Literal["HeatherAlpha", "HeatherBeta", "Huth", "Emerson"],
+    save_dir: str,
+    to_dir: str,
+    experiment_ids: List[str],
+    data_type: Literal["HeatherAlpha", "HeatherBeta", "Huth", "Emerson"],
 ):
     if not experiment_ids:
         experiment_ids = data_type = ["HeatherAlpha", "HeatherBeta", "Huth", "Emerson"]

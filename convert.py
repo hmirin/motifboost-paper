@@ -1,5 +1,4 @@
 import glob
-import json
 import logging
 import os
 import random
@@ -7,9 +6,8 @@ import re
 
 import click
 import pandas as pd
-from tqdm import tqdm
-
 from motifboost.repertoire import Repertoire
+from tqdm import tqdm
 
 _logger = logging.getLogger(__name__)
 
