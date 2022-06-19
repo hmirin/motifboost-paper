@@ -4,10 +4,10 @@ from uuid import uuid4
 
 import click
 import pandas as pd
-
-from dataset import emerson_classification_cohort_split
 from motifboost.repertoire import Repertoire, repertoire_dataset_loader
 from motifboost.util import get_current_datetime
+
+from dataset import emerson_classification_cohort_split
 
 deeprc_available_sample_ids = [
     "HIP00110",

@@ -1,23 +1,20 @@
-import functools
 import multiprocessing
 import os
 from glob import glob
 from itertools import product
-from typing import List, Literal
+from typing import Literal
 
 import pandas as pd
-
-# from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
-from dataset import emerson_classification_cohort_split
-from experiments.fixed_split import main
-from joblib import Parallel, delayed
 from motifboost.methods.atchley_mil import AtchleyKmerMILClassifier
 from motifboost.methods.atchley_simple import AtchleySimpleClassifier
-
 # from motifboost.methods.motif import MotifClassifier
 from motifboost.repertoire import Repertoire, repertoire_dataset_loader
 from motifboost.util import human_amino_acids
 from tqdm import tqdm
+
+# from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
+from dataset import emerson_classification_cohort_split
+from experiments.fixed_split import main
 
 classifier_dict = {
     "motif": MotifBoostClassifier(),
