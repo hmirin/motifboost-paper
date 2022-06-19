@@ -1,8 +1,6 @@
 import os
 from typing import Literal
 
-from dataset import emerson_classification_cohort_split, huth_classification
-from experiments.fixed_split import main
 from motifboost.methods.atchley_mil import AtchleyKmerMILClassifier
 from motifboost.methods.atchley_simple import AtchleySimpleClassifier
 from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
@@ -10,6 +8,9 @@ from motifboost.methods.motif import MotifBoostClassifier
 from motifboost.repertoire import Repertoire, repertoire_dataset_loader
 from motifboost.util import human_amino_acids
 from tqdm import tqdm
+
+from dataset import emerson_classification_cohort_split, huth_classification
+from experiments.fixed_split import main
 
 
 def emerson_hip_to_huth_split(x: Repertoire) -> Literal["train", "test", "other"]:

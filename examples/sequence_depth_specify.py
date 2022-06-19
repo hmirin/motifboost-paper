@@ -1,17 +1,15 @@
-import multiprocessing
 import os
 
 import click
-import mlflow
-from dataset import emerson_classification_cohort_split
-from experiments.fixed_split import main
 from motifboost.methods.atchley_mil import AtchleyKmerMILClassifier
 from motifboost.methods.atchley_simple import AtchleySimpleClassifier
 from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
 from motifboost.methods.motif import MotifBoostClassifier
-from motifboost.repertoire import augment_repertoire, repertoire_dataset_loader
+from motifboost.repertoire import repertoire_dataset_loader
 from motifboost.util import human_amino_acids
-from tqdm import tqdm
+
+from dataset import emerson_classification_cohort_split
+from experiments.fixed_split import main
 
 setting_prefix = "all"
 setting = emerson_classification_cohort_split

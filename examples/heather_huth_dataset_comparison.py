@@ -1,19 +1,18 @@
-import argparse
 import glob
 
-import mlflow
 import pandas as pd
+from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
+from motifboost.methods.motif import MotifBoostClassifier
+from motifboost.repertoire import Repertoire
+from motifboost.util import human_amino_acids
+from tqdm import tqdm
+
 from dataset import (
     heather_classification_alpha,
     heather_classification_beta,
     huth_classification,
 )
 from experiments.fixed_split import main
-from motifboost.methods.emerson import EmersonClassifierWithParameterSearch
-from motifboost.methods.motif import MotifBoostClassifier
-from motifboost.repertoire import Repertoire
-from motifboost.util import human_amino_acids
-from tqdm import tqdm
 
 settings = {
     "heather_alpha": heather_classification_alpha,
